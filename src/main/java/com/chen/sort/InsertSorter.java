@@ -3,6 +3,7 @@ package com.chen.sort;
 import com.chen.utils.RandomUtils;
 
 /**
+ * 插入排序
  * @author ValleyChen
  * @version 1.0.0
  * @time 2017/1/14

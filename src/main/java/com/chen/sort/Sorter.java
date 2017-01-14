@@ -9,6 +9,9 @@ public abstract class Sorter<T extends Comparable> {
 
     T[] data;
 
+    public Sorter() {
+    }
+
     public Sorter(T[] data) {
         this.data = data;
     }

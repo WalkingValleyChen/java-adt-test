@@ -21,10 +21,13 @@ public class MergeSorter extends RecursiveMergeSorter {
     @Override
     public void sort() {
         int length = 1;
-        while (length > data.length >> 1)
-            for (int i = 0; i < data.length - length; i += length * 2) {
-                merge(i, i + length, i + 2 * length);
+        while (length <= data.length >> 1){
+            for (int i = 0; i < data.length; i += length * 2) {
+                int right = i + 2 * length-1;
+                merge(i, i+right>>1, right<data.length?right:(data.length-1));
             }
+            length*=2;
+        }
     }
 
 
@@ -32,7 +35,7 @@ public class MergeSorter extends RecursiveMergeSorter {
         for (int i = 5; i < 9; i++) {
             int size = 1 << i;
             Integer[] data = RandomUtils.generateRandomIntegerArray(size, size);
-            new RecursiveMergeSorter(data).test();
+            new MergeSorter(data).test();
         }
 
 

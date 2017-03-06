@@ -26,9 +26,14 @@ public class BinaryArrayHeap<T extends Comparable> {
         size = data.length;
         System.arraycopy(data, 0, this.data, 1,
                 data.length);
-        for (int i = size; i > 0; i--) {
+        //下沉
+        for (int i = size/2; i > 0; i--) {
             sink(i);
         }
+        //上浮
+//        for (int i = 1; i <=size; i++) {
+//            swin(i);
+//        }
     }
 
     public boolean min(int i, int j) {

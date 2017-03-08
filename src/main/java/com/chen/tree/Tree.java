@@ -19,5 +19,9 @@ public interface Tree<T extends Comparable> {
 
     void print();
 
+    void levelPrint();
+
     void check();
+
+
 }

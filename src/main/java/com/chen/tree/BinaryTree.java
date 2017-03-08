@@ -2,6 +2,10 @@ package com.chen.tree;
 
 import com.chen.utils.RandomUtils;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 /**
  * @author Chenwl
  * @version 1.0.0
@@ -130,6 +134,10 @@ public class BinaryTree<T extends Comparable> implements Tree<T> {
         if (node.right!=null&&node.value.compareTo(node.right.value) > 0) {
             throw new RuntimeException("树节点" + node.value + "比右节点大");
         }
+        if (node.left != null)
+            check(node.left);
+        if(node.right!=null)
+            check(node.right);
     }
 
     public void print(Node node) {
@@ -142,6 +150,35 @@ public class BinaryTree<T extends Comparable> implements Tree<T> {
     int sise(Node node) {
         if (node == null) return 0;
         return node.size;
+    }
+
+    public void levelPrint() {
+        if (root == null)
+            return;
+        Queue<Node> queue = new LinkedList<Node>();
+        Queue<Node> queue1 = new LinkedList<Node>();
+        queue.offer(root);// 从根节点入队列
+        while (!queue.isEmpty()) {// 在队列为空前反复迭代
+            Node node = queue.poll();// 取出队列首节点
+            System.out.printf(node.value.toString() + "(" + sise(node)+") ");
+            if (node.left != null)
+                queue1.offer(node.left);// 左孩子入列
+            if (node.right != null)
+                queue1.offer(node.right);// 右孩子入列
+            if (queue.isEmpty()) {
+                System.out.println();
+                queue = queue1;
+                queue1 = new LinkedList<Node>();
+            }
+        }
+    }
+
+    private void levelPrint(AVLTree.Node node, List<AVLTree.Node> queue) {
+        queue.add(node);
+        if (node != null) {
+            levelPrint(node.left, queue);
+            levelPrint(node.right, queue);
+        }
     }
 
     class Node {
@@ -162,14 +199,14 @@ public class BinaryTree<T extends Comparable> implements Tree<T> {
         for (Integer i : integers) {
             tree.add(i);
         }
-        tree.print();
+        tree.levelPrint();
         tree.check();
 
         for (int i = 0; i < 10; i++) {
             System.out.println("删除" + integers[i]);
             tree.delete(integers[i]);
         }
-        tree.print();
+        tree.levelPrint();
         tree.check();
         for (int i = 0; i < 10; i++) {
             System.out.println("包含" + integers[i] + ":" + tree.contains(integers[i]));

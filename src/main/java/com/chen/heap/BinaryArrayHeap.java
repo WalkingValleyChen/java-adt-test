@@ -1,9 +1,7 @@
 package com.chen.heap;
 
 import com.chen.utils.RandomUtils;
-import com.sun.deploy.util.ArrayUtil;
 
-import java.util.Arrays;
 import java.util.Random;
 
 /**

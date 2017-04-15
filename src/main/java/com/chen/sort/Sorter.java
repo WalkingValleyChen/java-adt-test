@@ -9,6 +9,9 @@ public abstract class Sorter<T extends Comparable> {
 
     T[] data;
 
+    public Sorter() {
+    }
+
     public Sorter(T[] data) {
         this.data = data;
     }
@@ -46,7 +49,7 @@ public abstract class Sorter<T extends Comparable> {
     }
 
     public void print() {
-        for (int i = 0; i < data.length - 2; i++) {
+        for (int i = 0; i < data.length - 1; i++) {
             System.out.print(data[i] + ",");
         }
         System.out.print(data[data.length - 1]);

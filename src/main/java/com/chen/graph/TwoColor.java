@@ -28,17 +28,13 @@ public class TwoColor {
 
     private void dfs(Graph g, int v) {
         this.marked[v] = true;
-        Iterator var3 = g.adj(v).iterator();
-
-        while(var3.hasNext()) {
-            int w = ((Integer)var3.next()).intValue();
+        for(int w:g.adj(v))
             if(!this.marked[w]) {
                 this.color[w] = !this.color[v];
                 this.dfs(g, w);
             } else if(this.color[w] != this.color[v]) {
                 this.isTwoColor = false;
             }
-        }
 
     }
 

@@ -20,9 +20,8 @@ public class SymbolGraph {
     public SymbolGraph(String stream, String sp) {
         In in = new In(stream);
 
-        String[] a;
         while(in.hasNextLine()) {
-            a = in.readLine().split(sp);
+            String[]  a = in.readLine().split(sp);
 
             for(int movie = 0; movie < a.length; ++movie) {
                 this.map.put(a[movie], Integer.valueOf(this.map.size()));
@@ -31,20 +30,19 @@ public class SymbolGraph {
 
         this.keys = new String[this.map.size()];
 
-        String var8;
-        for(Iterator var7 = this.map.keySet().iterator(); var7.hasNext(); this.keys[((Integer)this.map.get(var8)).intValue()] = var8) {
-            var8 = (String)var7.next();
+        for (String key:map.keySet()) {
+            keys[map.get(key)]=key;
         }
 
         this.graph = new Graph(this.keys.length);
         in = new In(stream);
 
         while(in.hasNextLine()) {
-            a = in.readLine().split(sp);
-            var8 = a[0];
+            String[] a = in.readLine().split(sp);
+            String first = a[0];
 
             for(int i = 1; i < a.length; ++i) {
-                this.graph.addEdge(((Integer)this.map.get(var8)).intValue(), ((Integer)this.map.get(a[i])).intValue());
+                this.graph.addEdge(this.map.get(first), this.map.get(a[i]));
             }
         }
 
@@ -55,7 +53,7 @@ public class SymbolGraph {
     }
 
     public int index(String key) {
-        return ((Integer)this.map.get(key)).intValue();
+        return this.map.get(key);
     }
 
     public String name(int v) {
@@ -70,10 +68,10 @@ public class SymbolGraph {
         SymbolGraph sg = new SymbolGraph("/movies.txt", "/");
         System.out.println(sg.G());
         Graph g = sg.G();
-        List adj = g.adj(sg.index("Jbara, Gregory"));
+        List<Integer> adj = g.adj(sg.index("Jbara, Gregory"));
 
         for(int i = 0; i < adj.size(); ++i) {
-            System.out.println(sg.name(((Integer)adj.get(i)).intValue()));
+            System.out.println(sg.name(adj.get(i)));
         }
 
     }

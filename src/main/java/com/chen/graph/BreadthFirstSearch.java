@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.In;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author ValleyChen
@@ -20,22 +21,18 @@ public class BreadthFirstSearch {
     }
 
     private void bfs(Graph g, int v) {
-        LinkedList queue = new LinkedList();
-        queue.add(Integer.valueOf(v));
+        Queue<Integer> queue = new LinkedList();
+        queue.add(v);
         this.marked[v] = true;
 
-        while(!queue.isEmpty()) {
-            int w = ((Integer)queue.remove()).intValue();
+        while (!queue.isEmpty()) {
+            int w = queue.remove();
             ++this.count;
-            Iterator var5 = g.adj(w).iterator();
-
-            while(var5.hasNext()) {
-                int c = ((Integer)var5.next()).intValue();
-                if(!this.marked[c]) {
+            for (int c : g.adj(w))
+                if (!this.marked[c]) {
                     this.marked[c] = true;
-                    queue.add(Integer.valueOf(c));
+                    queue.add(c);
                 }
-            }
         }
 
     }
@@ -54,7 +51,7 @@ public class BreadthFirstSearch {
         BreadthFirstSearch search = new BreadthFirstSearch(graph, 0);
         System.out.println("0 dfs marked count is " + search.count);
 
-        for(int i = 0; i < graph.V(); ++i) {
+        for (int i = 0; i < graph.V(); ++i) {
             System.out.println(i + " marked is " + search.marked(i));
         }
 

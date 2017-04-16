@@ -62,9 +62,9 @@ public class Graph {
 
         for(int i = 0; i < this.V; ++i) {
             sb.append(i + " adj:");
-            sb.append(String.join(",", (Iterable)this.adj[i].stream().map((a) -> {
-                return a.toString();
-            }).collect(Collectors.toList())));
+            sb.append(String.join(",", adj[i].stream().map((a) ->
+                 a.toString()
+            ).collect(Collectors.toList())));
             sb.append("\n");
         }
 

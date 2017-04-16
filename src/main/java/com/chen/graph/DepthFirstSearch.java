@@ -21,14 +21,10 @@ public class DepthFirstSearch {
     private void dfs(Graph g, int v) {
         this.marked[v] = true;
         ++this.count;
-        Iterator var3 = g.adj(v).iterator();
-
-        while(var3.hasNext()) {
-            int w = ((Integer)var3.next()).intValue();
+        for(int w:g.adj(v))
             if(!this.marked[w]) {
                 this.dfs(g, w);
             }
-        }
 
     }
 

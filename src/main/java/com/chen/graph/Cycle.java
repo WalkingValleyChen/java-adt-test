@@ -26,16 +26,12 @@ public class Cycle {
 
     private void dfs(Graph g, int v, int p) {
         this.marked[v] = true;
-        Iterator var4 = g.adj(v).iterator();
-
-        while(var4.hasNext()) {
-            int w = ((Integer)var4.next()).intValue();
+        for(int w:g.adj(v))
             if(!this.marked[w]) {
                 this.dfs(g, w, v);
             } else if(w != p) {
                 this.hasCycle = true;
             }
-        }
 
     }
 

@@ -2,10 +2,7 @@ package com.chen.graph;
 
 import edu.princeton.cs.algs4.In;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author ValleyChen
@@ -26,23 +23,19 @@ public class BreadthFirstPaths {
     }
 
     private void bfs(Graph g, int s) {
-        LinkedList queue = new LinkedList();
-        queue.add(Integer.valueOf(s));
+        Queue<Integer> queue = new LinkedList();
+        queue.add(s);
         this.marked[s] = true;
 
-        while(!queue.isEmpty()) {
-            int v = ((Integer)queue.remove()).intValue();
-            ++this.count;
-            Iterator var5 = g.adj(v).iterator();
-
-            while(var5.hasNext()) {
-                int w = ((Integer)var5.next()).intValue();
-                if(!this.marked[w]) {
+        while (!queue.isEmpty()) {
+            int v = queue.remove();
+            count++;
+            for (int w : g.adj(v))
+                if (!this.marked[w]) {
                     this.marked[w] = true;
                     this.edegTo[w] = v;
-                    queue.add(Integer.valueOf(w));
+                    queue.add(w);
                 }
-            }
         }
 
     }
@@ -56,16 +49,16 @@ public class BreadthFirstPaths {
     }
 
     public List<Integer> pathTo(int w) {
-        if(!this.hasPathTo(w)) {
+        if (!this.hasPathTo(w)) {
             return null;
         } else {
             Stack pathTos = new Stack();
 
-            for(int x = w; this.v != x; x = this.edegTo[x]) {
+            for (int x = w; this.v != x; x = this.edegTo[x]) {
                 pathTos.add(Integer.valueOf(x));
             }
 
-            pathTos.add(Integer.valueOf(this.v));
+            pathTos.add(v);
             return pathTos;
         }
     }
@@ -76,15 +69,11 @@ public class BreadthFirstPaths {
         BreadthFirstPaths search = new BreadthFirstPaths(graph, 0);
         System.out.println("0 dfs marked count is " + search.count);
 
-        for(int i = 0; i < graph.V(); ++i) {
+        for (int i = 0; i < graph.V(); ++i) {
             System.out.println(" path to " + i + " is " + search.hasPathTo(i));
             List path = search.pathTo(i);
-            if(path != null) {
-                System.out.println("path is " + (String)path.stream().map((a) -> {
-                    return a.toString();
-                }).reduce((a, b) -> {
-                    return a + "->" + b;
-                }).get());
+            if (path != null) {
+                System.out.println("path is " + path.stream().map(a -> a.toString()).reduce((a, b) -> a + "->" + b).get());
             }
         }
 

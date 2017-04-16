@@ -18,8 +18,8 @@ public class CC {
         this.marked = new boolean[g.V()];
         this.id = new int[g.V()];
 
-        for(int v = 0; v < g.V(); ++v) {
-            if(!this.marked(v)) {
+        for (int v = 0; v < g.V(); ++v) {
+            if (!this.marked(v)) {
                 ++this.count;
                 this.dfs(g, v);
             }
@@ -30,14 +30,10 @@ public class CC {
     private void dfs(Graph g, int v) {
         this.marked[v] = true;
         this.id[v] = this.count;
-        Iterator var3 = g.adj(v).iterator();
-
-        while(var3.hasNext()) {
-            int w = ((Integer)var3.next()).intValue();
-            if(!this.marked[w]) {
+        for (int w : g.adj(v))
+            if (!this.marked[w]) {
                 this.dfs(g, w);
             }
-        }
 
     }
 
@@ -63,7 +59,7 @@ public class CC {
         CC cc = new CC(graph);
         System.out.println(cc.count);
 
-        for(int i = 0; i < graph.V(); ++i) {
+        for (int i = 0; i < graph.V(); ++i) {
             System.out.println(i + " id is " + cc.id(i));
         }
 

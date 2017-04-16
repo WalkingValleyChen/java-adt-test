@@ -27,15 +27,11 @@ public class DepthFirstPaths {
     private void dfs(Graph g, int v) {
         this.marked[v] = true;
         ++this.count;
-        Iterator var3 = g.adj(v).iterator();
-
-        while(var3.hasNext()) {
-            int w = ((Integer)var3.next()).intValue();
-            if(!this.marked[w]) {
+        for (int w : g.adj(v))
+            if (!this.marked[w]) {
                 this.edegTo[w] = v;
                 this.dfs(g, w);
             }
-        }
 
     }
 
@@ -48,16 +44,16 @@ public class DepthFirstPaths {
     }
 
     public List<Integer> pathTo(int w) {
-        if(!this.hasPathTo(w)) {
+        if (!this.hasPathTo(w)) {
             return null;
         } else {
-            Stack pathTos = new Stack();
+            Stack<Integer> pathTos = new Stack();
 
-            for(int x = w; this.v != x; x = this.edegTo[x]) {
-                pathTos.add(Integer.valueOf(x));
+            for (int x = w; this.v != x; x = this.edegTo[x]) {
+                pathTos.add(x);
             }
 
-            pathTos.add(Integer.valueOf(this.v));
+            pathTos.add(v);
             return pathTos;
         }
     }
@@ -68,15 +64,11 @@ public class DepthFirstPaths {
         DepthFirstPaths search = new DepthFirstPaths(graph, 0);
         System.out.println("0 dfs marked count is " + search.count);
 
-        for(int i = 0; i < graph.V(); ++i) {
+        for (int i = 0; i < graph.V(); ++i) {
             System.out.println(" path to " + i + " is " + search.hasPathTo(i));
             List path = search.pathTo(i);
-            if(path != null) {
-                System.out.println("path is " + (String)path.stream().map((a) -> {
-                    return a.toString();
-                }).reduce((a, b) -> {
-                    return a + "->" + b;
-                }).get());
+            if (path != null) {
+                System.out.println("path is " + path.stream().map(a -> a.toString()).reduce((a, b) -> a + "->" + b).get());
             }
         }
 

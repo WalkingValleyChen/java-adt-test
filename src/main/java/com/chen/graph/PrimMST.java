@@ -1,5 +1,6 @@
 package com.chen.graph;
 
+import com.chen.heap.BinaryArrayHeap;
 import edu.princeton.cs.algs4.Edge;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.princeton.cs.algs4.In;
@@ -16,7 +17,7 @@ public class PrimMST {
     private boolean[] marked;
     private Edge[] edgeTo;
     private double[] distTo;
-    private TreeSet<VE> set;
+    private BinaryArrayHeap<VE> set;
     private VE[] ves;
 
     private List<Edge> edges;
@@ -31,14 +32,13 @@ public class PrimMST {
         }
 
 
-        set=new TreeSet<>((a,b)->a.v==b.v?0:a.wight>b.wight?1:-1);
+        set=new BinaryArrayHeap<>(g.V());
         ves=new VE[g.V()];
         VE first = new VE(0, new Edge(0, 0, 0), 0);
-        set.add(first);
+        set.insert(first);
         ves[0]=first;
-        while (!set.isEmpty()){
-            VE ve = set.first();
-            set.remove(ve);
+        while (set.getSize()!=0){
+            VE ve = set.pop();
             ves[ve.v]=null;
             visit(g,ve.v);
 
@@ -61,7 +61,7 @@ public class PrimMST {
                 edgeTo[w]=e;
                 if(ves[w]==null){
                     VE ve = new VE(w, e, e.weight());
-                    set.add(ve);
+                    set.insert(ve);
                     ves[w]=ve;
                 }else {
                     ves[w].setE(e);
@@ -79,7 +79,7 @@ public class PrimMST {
 
 
 
-    private class VE{
+    private class VE implements Comparable<VE>{
         private int v;
         private Edge e;
         private double wight;
@@ -115,11 +115,17 @@ public class PrimMST {
         }
 
 
+        @Override
+        public int compareTo(VE b) {
+            if(b==null)
+                return 1;
+            return this.v==b.v?0:this.wight>b.wight?1:-1;
+        }
     }
 
 
     public static void main(String[] args) {
-        EdgeWeightedGraph g = new EdgeWeightedGraph(new In("/largeEWG.txt"));
+        EdgeWeightedGraph g = new EdgeWeightedGraph(new In("/tinyEWG.txt"));
         PrimMST mst = new PrimMST(g);
         List<Edge> edges = mst.mstEdges();
         for(Edge e:edges){

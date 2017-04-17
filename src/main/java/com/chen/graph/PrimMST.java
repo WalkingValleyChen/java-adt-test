@@ -119,7 +119,7 @@ public class PrimMST {
 
 
     public static void main(String[] args) {
-        EdgeWeightedGraph g = new EdgeWeightedGraph(new In("/tinyEWG.txt"));
+        EdgeWeightedGraph g = new EdgeWeightedGraph(new In("/largeEWG.txt"));
         PrimMST mst = new PrimMST(g);
         List<Edge> edges = mst.mstEdges();
         for(Edge e:edges){

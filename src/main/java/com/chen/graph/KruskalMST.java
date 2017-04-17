@@ -67,7 +67,7 @@ public class KruskalMST {
     }
 
     public static void main(String[] args) {
-        EdgeWeightedGraph g = new EdgeWeightedGraph(new In("/tinyEWG.txt"));
+        EdgeWeightedGraph g = new EdgeWeightedGraph(new In("/largeEWD.txt"));
         KruskalMST mst = new KruskalMST(g);
         List<Edge> edges = mst.mstEdges();
         for(Edge e:edges){
